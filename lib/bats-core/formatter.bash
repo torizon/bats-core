@@ -44,7 +44,7 @@ function bats_parse_internal_extended_tap() {
   not_ok_line_regexpr="not ok ([0-9]+) (.*)"
 
 
-  timing_expr="in ([0-9]+)ms$" # Used to detect and extract timing
+  timing_expr="in ([0-9]+)ms" # Used to detect and extract timing
   local test_name begin_index last_begin_index try_index ok_index not_ok_index index scope
   begin_index=0
   last_begin_index=-1
@@ -79,7 +79,7 @@ function bats_parse_internal_extended_tap() {
           if [[ "$current_test_name" =~ $timing_expr ]]; then
             current_timing_duration="${BASH_REMATCH[1]}"
             # Remove timing from the current_test_name for further processing
-            current_test_name="${current_test_name% in "${current_timing_duration}"ms}"
+            current_test_name="${current_test_name% in "${current_timing_duration}"ms*}"
             BATS_FORMATTER_TEST_DURATION="$current_timing_duration"
           fi
 
